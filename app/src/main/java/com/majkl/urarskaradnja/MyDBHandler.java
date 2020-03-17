@@ -1,6 +1,7 @@
 package com.majkl.urarskaradnja;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
@@ -50,7 +51,24 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
-    public Satovi findHandler(String nazivsata){}
+    public Satovi findHandler(String nazivsata){
+        StringQuery = "Select * FROM " + TABLE_NAME + "WHERE" +
+                COLUMN_NAME + " = " + "'" + nazivsata;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor =db.rawQuery(query, null);
+        Satovi satovi = new Satovi();
+        if(cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            satovi.setSatID(Integer.parseInt(cursor.getString(0)));
+            satovi.setNazivSata(cursor.getString(1));
+            cursor.close();
+            }else {
+            satovi = null;
+            }
+        db.close();
+        return satovi;
+        }
+
     public boolean deleteHandler(int ID){}
     public boolean updateHandler(int ID, String naziv){}
 
