@@ -27,10 +27,32 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1){}
-    public String loadHandler{}
-    public  void addHandler(Satovi satovi){}
+    public String loadHandler(){
+        String result = "";
+        String query = "Select*FROM" + TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()){
+            int result_0 = cursor.getInt(0);
+            String result_1 = cursor.getString(1);
+            result += String.valueOf(result_0) + " " + result_1 +
+                    System.getProperty("line.separator");
+        }
+        cursor.close();
+        db.close();
+        return result;
+    }
+    public  void addHandler(Satovi satovi){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ID, satovi.getSatID());
+        values.put(COLUMN_NAME, satovi.getNazivSata());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_NAME, null, values);
+        db.close();
+    }
     public Satovi findHandler(String nazivsata){}
     public boolean deleteHandler(int ID){}
     public boolean updateHandler(int ID, String naziv){}
 
-}
+    }
+
