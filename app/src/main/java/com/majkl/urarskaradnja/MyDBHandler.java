@@ -12,14 +12,18 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME ="satoviDB.db";
     public static final String TABLE_NAME = "Satovi";
     public static final String COLUMN_ID = "SatID";
-    public static final String TABLE_NAME = "NazivSata";
+    public static final String COLUMN_NAME = "NazivSata";
 
     public MyDBHandler(Context context, Stringname, SQLiteDatabase.CursorFactory factory, intversion) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db){}
+    public void onCreate(SQLiteDatabase db){
+    String CREATE_TABLE = "CREATE TABLE" + TABLE_NAME +"(" + COLUMN_ID +
+    "INTEGER PRIMARYKEY," + COLUMN_NAME + "TEXT )";
+    db.execSQL(CREATE_TABLE);
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1){}
