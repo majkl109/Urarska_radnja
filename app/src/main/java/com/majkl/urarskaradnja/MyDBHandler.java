@@ -69,8 +69,32 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return satovi;
         }
 
-    public boolean deleteHandler(int ID){}
-    public boolean updateHandler(int ID, String naziv){}
+    public boolean deleteHandler(int ID){
+        booleanResult = false;
+        StringQuery = "Select * FROM" + TABLE_NAME + "WHERE" + COLUMN_ID + "= '" + String.valueOf(ID);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Satovi satovi = new Satovi();
+        if(cursor.moveToFirst()) {
+            satovi.setSatID(Integer.parseInt(cursor.getString(0)));
+            db.delete(TABLE_NAME, COLUMN_ID + "=?",
+                    new String[]{
+                String.valueOf(satovi.getSatID())
+            });
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
+    public boolean updateHandler(int ID, String naziv){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues args = new ContentValues();
+        args.put(COLUMN_ID, ID);
+        args.put(COLUMN_NAME, name);
+        return  db.update(TABLE_NAME, args, COLUMN_ID + "="
+                + ID, null) > 0;
+    }
 
     }
 
