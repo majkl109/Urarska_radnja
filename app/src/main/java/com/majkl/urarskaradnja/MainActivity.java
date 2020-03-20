@@ -29,4 +29,18 @@ public class MainActivity extends AppCompatActivity {
         SatID.setText("");
         NazivSata.setText("");
     }
+    public void findSatovi(View view){
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        Satovi satovi = dbHandler.findHandler(NazivSata.getText().toString));
+        if(satovi != null {
+            lst.setText(String.valueOf(satovi.getSatID()) +
+                    satovi.getNazivSata() + System.getProperty());
+            SatID.setText("");
+            NazivSata.setText("");
+        }else{
+            lst.setText("No match found");
+            SatID.setText("");
+            NazivSata.setText("");
+        }
+    }}
 }
