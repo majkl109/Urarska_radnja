@@ -17,8 +17,15 @@
 
     <Button
         android:id="@+id/btnload"
+        android:onClick="loadSatovi";
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Load"/>
+
+    <Button
+        android:id="@+id/btnadd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
