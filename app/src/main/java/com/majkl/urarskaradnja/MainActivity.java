@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import com.majkl.urarskaradnja.MyDBHandler;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Satovi{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,31 +15,45 @@ public class MainActivity extends AppCompatActivity {
     public void loadSatovi(View view){
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         lst.setText(dbHandler.loadHandler());
-        SatID.setText("");
-        NazivSata.setText("");
+        satID.setText("");
+        nazivSata.setText("");
 
     }
     public void addSatovi(View view){
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         int id = Integer.parseInt(satID.getText().toString());
-        String name = NazivSata.getText().toString();
+        String name = nazivSata.getText().toString();
         Satovi satovi = new Satovi(id,name);
         dbHandler.addHandler(satovi);
-        SatID.setText("");
-        NazivSata.setText("");
+        satID.setText("");
+        nazivSata.setText("");
     }
     public void findSatovi(View view){
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        Satovi satovi = dbHandler.findHandler(NazivSata.getText().toString));
-        if(satovi != null {
-            lst.setText(String.valueOf(satovi.getSatID()) +
-                    satovi.getNazivSata() + System.getProperty());
-            SatID.setText("");
-            NazivSata.setText("");
-        }else{
+        Satovi satovi = dbHandler.findHandler(nazivSata.getText().toString());
+        if(satovi != null) {
+            lst.setText(satovi.getSatID()) +
+                    satovi.getNazivSata() + System.getProperty();
+            satID.setText("");
+            nazivSata.setText("");
+        }else
             lst.setText("No match found");
-            SatID.setText("");
-            NazivSata.setText("");
+            satID.setText("");
+            nazivSata.setText("");
+    }
+    public void removeSatovi(View view){
+        MyDBHandler dbHandler = new MyDBHandler(this,
+                null, null, 1);
+        boolean result = dbHandler.deleteHandler(Integer.parseInt
+                (satID.getText().toString));
+        if(result) {
+            satID.setText("");
+            nazivSata.setText("");
+            lst.setText("Record deleted");
+        }else
+            satID.setText("No match found");
         }
-    }}
-}
+    }
+
+
+

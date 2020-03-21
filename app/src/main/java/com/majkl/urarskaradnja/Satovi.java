@@ -2,8 +2,8 @@ package com.majkl.urarskaradnja;
 
 public class Satovi {
 
-    private int satID;
-    private String nazivSata;
+    public int satID;
+    public String nazivSata;
 
     public Satovi() {
     }
