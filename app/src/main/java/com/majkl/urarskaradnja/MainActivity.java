@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements Satovi{
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         Satovi satovi = dbHandler.findHandler(nazivSata.getText().toString());
         if(satovi != null) {
-            lst.setText(satovi.getSatID()) +
-                    satovi.getNazivSata() + System.getProperty();
+            lst.setText(satovi.getSatID()) + " " +
+                    satovi.getNazivSata() + System.getProperty("line.separator");
             satID.setText("");
             nazivSata.setText("");
         }else
@@ -53,7 +53,21 @@ public class MainActivity extends AppCompatActivity implements Satovi{
         }else
             satID.setText("No match found");
         }
+    public  void updateStudent(View view){
+        MyDBHandler dbHandler = new MyDBHandler(this, null ,
+                null,1);
+        boolean result = dbHandler.updateHandler(Integer.parseInt(
+                satID.getText().toString()), nazivSata.getText().toString());
+        if(result) {
+            satID.setText("");
+            nazivSata.setText("");
+            lst.setText("Record updated");
+        }else
+            satID.setText("No match found");
+        }
+
     }
+
 
 
 
