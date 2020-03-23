@@ -4,13 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements Satovi{
+public class MainActivity extends AppCompatActivity {
+
+    TextView lst;
+    EditText satID;
+    EditText nazivSata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        lst = findViewById(R.id.list);
+        satID = findViewById(R.id.satID);
+        nazivSata = findViewById(R.id.nazivSata);
     }
     public void loadSatovi(View view){
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
@@ -32,14 +41,12 @@ public class MainActivity extends AppCompatActivity implements Satovi{
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         Satovi satovi = dbHandler.findHandler(nazivSata.getText().toString());
         if(satovi != null) {
-            lst.setText(satovi.getSatID()) + " " +
-                    satovi.getNazivSata() + System.getProperty("line.separator");
-            satID.setText("");
-            nazivSata.setText("");
+            lst.setText(String.valueOf(satovi.getSatID()) + " " +
+                    satovi.getNazivSata());
+
         }else
             lst.setText("No match found");
-            satID.setText("");
-            nazivSata.setText("");
+
     }
     public void removeSatovi(View view){
         MyDBHandler dbHandler = new MyDBHandler(this,
