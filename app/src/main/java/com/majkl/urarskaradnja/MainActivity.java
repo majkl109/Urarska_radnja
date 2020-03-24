@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         Satovi satovi = dbHandler.findHandler(nazivSata.getText().toString());
         if(satovi != null) {
-            lst.setText(String.valueOf(satovi.getSatID()) + " " +
+            lst.setText(String.format(String.valueOf(satovi.getSatID())) + " " +
                     satovi.getNazivSata());
 
         }else
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         MyDBHandler dbHandler = new MyDBHandler(this,
                 null, null, 1);
         boolean result = dbHandler.deleteHandler(Integer.parseInt
-                (satID.getText().toString));
+                (satID.getText().toString()));
         if(result) {
             satID.setText("");
             nazivSata.setText("");

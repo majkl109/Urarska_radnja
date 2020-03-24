@@ -1,12 +1,10 @@
 package com.majkl.urarskaradnja;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.view.View;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
@@ -24,16 +22,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-    String CREATE_TABLE = "CREATE TABLE" + TABLE_NAME +"(" + COLUMN_ID +
-    "INTEGER PRIMARYKEY," + COLUMN_NAME + "TEXT )";
-    db.execSQL(CREATE_TABLE);
+    String CREATE_SATOVI_TABLE = "CREATE TABLE SATOVI" + TABLE_NAME +"(" + COLUMN_ID +
+    " INTEGER PRIMARY KEY," + COLUMN_NAME + " TEXT " + ")";
+    db.execSQL(CREATE_SATOVI_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1){}
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
     public String loadHandler(){
         String result = "";
-        String query = "Select * FROM " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()){
@@ -56,7 +57,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
     public Satovi findHandler(String nazivSata){
         String query = "Select * FROM " + TABLE_NAME + "WHERE" +
-                COLUMN_NAME + " = " + "'" + nazivSata;
+                COLUMN_NAME + " = '" + "'" + nazivSata;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor =db.rawQuery(query, null);
         Satovi satovi = new Satovi();
@@ -74,7 +75,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public boolean deleteHandler(int ID){
         boolean result = false;
-        String query = "Select * FROM" + TABLE_NAME + "WHERE" + COLUMN_ID + "= '" + String.valueOf(ID);
+        String query = "Select * FROM" + TABLE_NAME + "WHERE" + COLUMN_ID + "= '" + ID + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Satovi satovi = new Satovi();
@@ -94,7 +95,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues args = new ContentValues();
         args.put(COLUMN_ID, ID);
-        args.put(COLUMN_NAME, name);
+        args.put(COLUMN_NAME, naziv);
         return  db.update(TABLE_NAME, args, COLUMN_ID + "="
                 + ID, null) > 0;
     }
